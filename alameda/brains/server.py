@@ -46,9 +46,9 @@ class ModeAllOn:
 class ModeMotionDetection:
     def GET(self):
 
-	if mode == MODE_MOTION_DETECTION:
-		print "mode changed to motion detection"
-		sendint.sendInt(ser, '2')
+	mode = MODE_MOTION_DETECTION
+
+	print "mode changed to motion detection"
 
         return render.modesForm()		
 
