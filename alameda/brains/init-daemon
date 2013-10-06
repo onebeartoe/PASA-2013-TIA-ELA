@@ -1,7 +1,7 @@
 
 case $1 in
 start)
-	sleep 30s
+	sleep 3m
         python /home/pi/PASA-2013-TIA-ELA/alameda/brains/server.py
 	;;
 esac   
