@@ -14,12 +14,36 @@
 
 int currentMode = MODES_ALL_ON;
 
+int brainsPin = A2;
+
 void loop()
 { 
-  if (Serial.available())
+//  if (Serial.available())
+//  {
+//    currentMode = Serial.read() - '0';
+//  }
+  
+  currentMode = analogRead(brainsPin);
+
+  switch(currentMode)
   {
-    currentMode = Serial.read() - '0';
+    case 0:
+    {
+         Serial.println(currentMode);
+         break;
+    } 
+    case 1023:
+    {
+         Serial.println(currentMode);
+      break;
+    }
+    default:
+    {
+        Serial.println(currentMode);
+    }
   }
+  
+
   
   switch(currentMode)
   {
@@ -55,6 +79,9 @@ void allOn()
 
 void setup() 
 {
+  pinMode(A0, INPUT);
+
+
   pinMode(A, OUTPUT);
   pinMode(B, OUTPUT);
   pinMode(C, OUTPUT);
