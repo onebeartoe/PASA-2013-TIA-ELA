@@ -64,11 +64,9 @@ class MotionEnded:
 
 class MotionDetected:
     def GET(self):
-	if(mode == MODE_MOTION_DETECTION)
-	{
+	if mode == MODE_MOTION_DETECTION:
 		print "motion detected"
 		sendint.sendInt(ser, '2')
-	}
 
         return render.modesForm()
 		
