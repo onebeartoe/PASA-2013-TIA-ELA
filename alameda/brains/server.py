@@ -4,7 +4,7 @@ import web
 render = web.template.render('/home/pi/PASA-2013-TIA-ELA/alameda/brains/html/')
 
 urls = (
-    '/', 'index',
+	'/', 'index',
 	'/motion/detected', 'MotionDetected',
 	'/motion/ended', 'MotionEnded'
 )
