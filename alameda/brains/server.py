@@ -18,10 +18,11 @@ urls = (
 	'/motion/ended', 'MotionEnded'
 )
 
-int MODE_ALL_ON = 1
-int MODE_MOTION_DETECTION = 2
+MODE_ALL_ON = 1
 
-int mode = MODE_ALL_ON
+MODE_MOTION_DETECTION = 2
+
+mode = MODE_ALL_ON
 
 ser = serial.Serial('/dev/ttyACM0', 9600);
 #	time.sleep(2.0);
