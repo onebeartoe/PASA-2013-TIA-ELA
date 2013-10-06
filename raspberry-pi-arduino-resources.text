@@ -16,3 +16,10 @@ Web Py
 		tar -xzf web.py-0.37.tar.gz
 		cd web.py-0.37/
 		sudo python setup.py install
+
+
+Raspberry Pi 
+
+	startup scripts:
+
+		http://onebeartoe.org/development-environments/operating-systems/debian/
