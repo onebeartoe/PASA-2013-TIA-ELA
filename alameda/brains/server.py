@@ -1,7 +1,7 @@
 
 import web
 
-render = web.template.render('html/')
+render = web.template.render('/home/pi/PASA-2013-TIA-ELA/alameda/brains/html/')
 
 urls = (
     '/', 'index',
