@@ -2,5 +2,5 @@ import sendint;
 
 print "motion detected"
 
-sendint.sendInt('2')
+sendint.sendInt(ser, '2')
 

@@ -2,5 +2,5 @@ import sendint;
 
 print "motion ended"
 
-sendint.sendInt('1')
+sendint.sendInt(ser, '1')
 
