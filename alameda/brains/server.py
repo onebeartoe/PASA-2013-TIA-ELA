@@ -56,11 +56,9 @@ class ModeModeWaco:
 class MotionEnded:
     def GET(self):
 
-	if(mode == MODE_MOTION_DETECTION)
-	{
+	if mode == MODE_MOTION_DETECTION:
 		print "mode changed to all on"
 		sendint.sendInt(ser, '1')
-	}
 
         return render.modesForm()		
 
