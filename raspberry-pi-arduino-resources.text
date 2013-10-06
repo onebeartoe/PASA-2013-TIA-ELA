@@ -5,3 +5,14 @@ http://webcache.googleusercontent.com/search?q=cache:dmxeOayZUEkJ:www.doctormonk
 
 http://rbnrpi.wordpress.com/project-list/setting-up-wireless-motion-detect-cam/
 
+
+
+
+Web Py
+
+	http://webpy.org/
+
+		wget http://webpy.org/static/web.py-0.37.tar.gz
+		tar -xzf web.py-0.37.tar.gz
+		cd web.py-0.37/
+		sudo python setup.py install
