@@ -47,7 +47,7 @@ class ModeMotionDetection:
 	sendint.sendInt(ser, '2')
         return render.modesForm()		
 
-class ModeModeWaco:
+class ModeWaco:
     def GET(self):
 	print "mode changed to wacko"
 	sendint.sendInt(ser, '3')
