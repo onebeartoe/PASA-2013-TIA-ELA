@@ -22,6 +22,8 @@ MODE_ALL_ON = 1
 
 MODE_MOTION_DETECTION = 2
 
+MODE_RANDOM = 3	
+
 mode = MODE_ALL_ON
 
 ser = serial.Serial('/dev/ttyACM0', 9600);
@@ -43,13 +45,16 @@ class ModeAllOn:
 
 class ModeMotionDetection:
     def GET(self):
-	print "mode changed to motion detection 1"
-	sendint.sendInt(ser, '2')
+
+	if mode == MODE_MOTION_DETECTION:
+		print "mode changed to motion detection"
+		sendint.sendInt(ser, '2')
+
         return render.modesForm()		
 
 class ModeWaco:
     def GET(self):
-	print "mode changed to wacko"
+	print "mode changed to random"
 	sendint.sendInt(ser, '3')
         return render.modesForm()		
 		
