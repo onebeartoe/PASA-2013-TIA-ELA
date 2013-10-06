@@ -1,0 +1,9 @@
+
+case $1 in
+start)
+	sleep 3m
+        /home/pi/mmal/motion-mmal -n -c /home/pi/mmal/motion-mmalcam.conf
+	;;
+esac   
+exit 0
+
