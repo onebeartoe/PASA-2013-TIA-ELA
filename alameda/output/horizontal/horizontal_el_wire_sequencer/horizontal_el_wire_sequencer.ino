@@ -1,7 +1,8 @@
 
 
 #define MODES_ALL_ON 1
-#define MODES_STEP_THROUGH 2
+#define MODES_MOTION_DETECTED 2
+#define MODES_RANDOM 3
 
 #define A  2
 #define B  3
@@ -17,33 +18,33 @@ int currentMode = MODES_ALL_ON;
 int brainsPin = A2;
 
 void loop()
-{ 
-//  if (Serial.available())
-//  {
-//    currentMode = Serial.read() - '0';
-//  }
-  
+{   
   currentMode = analogRead(brainsPin);
 
   switch(currentMode)
   {
     case 0:
     {
+         currentMode = MODES_ALL_ON;
          Serial.println(currentMode);
          break;
     } 
     case 1023:
     {
-         Serial.println(currentMode);
+      currentMode = MODES_MOTION_DETECTED;
+      Serial.println(currentMode);
+      
       break;
+    }
+    case 300:
+    {
+      currentMode = MODES_RANDOM;
     }
     default:
     {
         Serial.println(currentMode);
     }
   }
-  
-
   
   switch(currentMode)
   {
@@ -52,10 +53,14 @@ void loop()
       allOn();
       break;
     }
-    case MODES_STEP_THROUGH:
+    case MODES_MOTION_DETECTED:
     {
       stepThrough();
       break;
+    }
+    case MODES_RANDOM:
+    {
+      randomly();
     }
     default:
     {
@@ -77,10 +82,23 @@ void allOn()
      digitalWrite(H, HIGH);    
 }
 
+void setAll(int mode)
+{
+
+     digitalWrite(A, HIGH); 
+     digitalWrite(B, HIGH); 
+     digitalWrite(C, HIGH); 
+     digitalWrite(D, HIGH); 
+     digitalWrite(E, HIGH); 
+     digitalWrite(FF, HIGH); 
+     digitalWrite(G, HIGH); 
+     digitalWrite(H, HIGH);    
+}
+
 void setup() 
 {
   pinMode(A0, INPUT);
-
+  randomSeed( analogRead(A5) );
 
   pinMode(A, OUTPUT);
   pinMode(B, OUTPUT);
@@ -93,6 +111,30 @@ void setup()
   
   // initialize serial communication:
   Serial.begin(9600);
+}
+
+void randomly()
+{
+  int x;
+  
+  // Step through all eight EL channels (pins 2 through 9)
+  for (x=2; x<=9; x++)
+  {
+    int state = random(2);
+    if(state == 0)
+    {
+      state = LOW;
+    }
+    else
+    {
+      state = HIGHT
+    }
+    
+    digitalWrite(x, state);   // turn the EL channel on
+  }
+  
+  delay(100);              // wait for 1/10 second
+  
 }
 
 void stepThrough()
@@ -110,4 +152,5 @@ void stepThrough()
     digitalWrite(13, status);
     status = !status; 
   }  
+  
 }

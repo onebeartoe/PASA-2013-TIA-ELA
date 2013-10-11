@@ -1,30 +1,26 @@
 
 #include <Adafruit_NeoPixel.h>
 
-#define N_PIXELS  30  // Number of pixels in strand
+#define N_PIXELS  125  // Number of pixels in strand
 
 #define LED_PIN    6  // NeoPixel LED strand is connected to this pin
-
-byte
-  peak      = 0,      // Used for falling dot
-  dotCount  = 0,      // Frame counter for delaying dot-falling speed
-  volCount  = 0;      // Frame counter for storing past volume data
-
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(N_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
-
-//int height = 30;
-
-long inches;
 
 // light modes
 #define MODES_ALL_ON 1
 #define MODES_MOTION_DETECTED_A 2
+#define MODES_RANDOM 3
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(N_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 int currentMode = MODES_ALL_ON;
 
 int motionDetectedAHeight = 0;
 
 int spireSequencerPin = 9;  // connected digital pin 9
+
+int leftLightPin = 10;
+
+int rightLightPin = 11;
 
 void loop()
 { 
@@ -38,14 +34,26 @@ void loop()
     case MODES_ALL_ON:
     {
       analogWrite(spireSequencerPin, 0);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+      
+      digitalWrite(leftLightPin, HIGH);
+      digitalWrite(rightLightPin, HIGH); 
+
       neoPixelsLadder(N_PIXELS, 500);
       
       break;
     }
     case MODES_MOTION_DETECTED_A:
     {
-        analogWrite(spireSequencerPin, 1023);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+      analogWrite(spireSequencerPin, 1023);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+      
       motionDetected();
+      
+      break;
+    }
+    case MODES_RANDOM:
+    {
+      analogWrite(spireSequencerPin, 300);
+      randomly();
       break;
     }
     default:
@@ -54,6 +62,8 @@ void loop()
     }
   }
 }
+
+boolean yellowLights = true;
 
 void motionDetected()
 {
@@ -66,7 +76,17 @@ void motionDetected()
   
   neoPixelsLadder(motionDetectedAHeight, 20);
   
-//  delay(20);
+  if(yellowLights)
+  {
+    digitalWrite(leftLightPin, HIGH);
+    digitalWrite(rightLightPin, HIGH); 
+  }
+  else
+  {
+    digitalWrite(leftLightPin, LOW);
+    digitalWrite(rightLightPin, LOW); 
+  }
+  yellowLights != yellowLights;
 }
 
 void neoPixelsLadder(int height, long msDelay)
@@ -97,12 +117,22 @@ void neoPixelsLadder(int height, long msDelay)
    strip.show(); // Update strip
 }
 
+void randomly()
+{
+  // Color pixels based on rainbow gradient
+  for(int i=0; i<N_PIXELS; i++) 
+  {
+    int c = random(255);
+    strip.setPixelColor(i, Wheel(c) );
+  }  
+}
 
 void setup() 
 {
-//  pinMode (2,OUTPUT);//attach pin 2 to vcc
-//  pinMode (5,OUTPUT);//attach pin 5 to GND
+  pinMode (leftLightPin,OUTPUT);
   
+  pinMode (rightLightPin,OUTPUT);
+    
   pinMode(spireSequencerPin, OUTPUT);   // sets the pin as output
   
   // initialize serial communication:
