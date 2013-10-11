@@ -1,6 +1,8 @@
-import sendint;
+#import sendint;
 
-print "motion detected"
+print "nothing happened in motion-detected.py"
+#print "motion detected"
 
-sendint.sendInt(ser, '2')
+
+#sendint.sendInt(ser, '2')
 

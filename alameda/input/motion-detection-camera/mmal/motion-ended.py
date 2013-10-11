@@ -1,6 +1,7 @@
-import sendint;
+#import sendint;
 
-print "motion ended"
+print "nothing happened in motion-ened.py"
+#print "motion ended"
 
-sendint.sendInt(ser, '1')
+#sendint.sendInt(ser, '1')
 
