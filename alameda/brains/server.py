@@ -11,7 +11,7 @@ render = web.template.render('/home/pi/PASA-2013-TIA-ELA/alameda/brains/html/')
 
 urls = (
 	'/', 'index',
-	'/mode/all-one', 'ModeAllOn',
+	'/mode/all-on', 'ModeAllOn',
 	'/mode/motion-detection', 'ModeMotionDetection',
 	'/mode/random', 'ModeRandom',
 	'/motion/detected', 'MotionDetected',
