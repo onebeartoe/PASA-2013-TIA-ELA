@@ -25,7 +25,7 @@ Raspberry Pi
 		http://onebeartoe.org/development-environments/operating-systems/debian/
 
 
-
+	curl was used for motion detection communication between the mmal-motion daemon and the web.py instances
 
 
 
