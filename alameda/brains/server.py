@@ -13,7 +13,7 @@ urls = (
 	'/', 'index',
 	'/mode/all-one', 'ModeAllOn',
 	'/mode/motion-detection', 'ModeMotionDetection',
-	'/mode/wacko', 'ModeWaco',
+	'/mode/random', 'ModeRandom',
 	'/motion/detected', 'MotionDetected',
 	'/motion/ended', 'MotionEnded'
 )
@@ -35,28 +35,32 @@ ser.open();
 
 class index:
     def GET(self):
-        return render.modesForm()
+        return render.modesForm(mode)
 		
 class ModeAllOn:
     def GET(self):
-	print "mode changed to all on"
+	mode = MODE_ALL_ON
 	sendint.sendInt(ser, '1')
-        return render.modesForm()
+	print "mode changed to all on"
+
+        return render.modesForm(mode)
 
 class ModeMotionDetection:
     def GET(self):
 
 	mode = MODE_MOTION_DETECTION
-
+	sendint.sendInt(ser, '2')
 	print "mode changed to motion detection"
 
-        return render.modesForm()		
+        return render.modesForm(mode)		
 
-class ModeWaco:
+class ModeRandom:
     def GET(self):
-	print "mode changed to random"
+	mode = MODE_RANDOM
 	sendint.sendInt(ser, '3')
-        return render.modesForm()		
+	print "mode changed to random"	
+
+        return render.modesForm(mode)		
 		
 class MotionEnded:
     def GET(self):
@@ -65,7 +69,7 @@ class MotionEnded:
 		print "mode changed to all on"
 		sendint.sendInt(ser, '1')
 
-        return render.modesForm()		
+        return render.modesForm(mode)		
 
 class MotionDetected:
     def GET(self):
@@ -73,7 +77,7 @@ class MotionDetected:
 		print "motion detected"
 		sendint.sendInt(ser, '2')
 
-        return render.modesForm()
+        return render.modesForm(mode)
 		
 
 # start the web server
