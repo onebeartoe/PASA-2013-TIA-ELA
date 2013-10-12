@@ -14,6 +14,7 @@ urls = (
 	'/mode/all-on', 'ModeAllOn',
 	'/mode/motion-detection', 'ModeMotionDetection',
 	'/mode/random', 'ModeRandom',
+	'/mode/ladder', 'ModeLadder',
 	'/motion/detected', 'MotionDetected',
 	'/motion/ended', 'MotionEnded'
 )
@@ -23,6 +24,8 @@ MODE_ALL_ON = 1
 MODE_MOTION_DETECTION = 2
 
 MODE_RANDOM = 3	
+
+MODE_LADDER = 4	
 
 mode = MODE_ALL_ON
 
@@ -68,7 +71,19 @@ class ModeRandom:
 	sendint.sendInt(ser, '3')
 	print "mode changed to random"	
 
-        return render.modesForm(mode)		
+        return render.modesForm(mode)
+
+class ModeLadder:
+    def GET(self):
+
+	global mode
+
+	mode = MODE_LADDER
+
+	sendint.sendInt(ser, '4')
+	print "mode changed to ladder\n"	
+
+        return render.modesForm(mode)
 		
 class MotionEnded:
     def GET(self):
@@ -77,7 +92,7 @@ class MotionEnded:
 
 	if mode == MODE_MOTION_DETECTION:
 		mode = MODE_ALL_ON
-		print "motion ended"
+		print "motion ended\n"
 		sendint.sendInt(ser, '1')
 
         return "motion ended"
@@ -88,7 +103,7 @@ class MotionDetected:
 	global mode
 
 	if mode == MODE_MOTION_DETECTION:
-		print "motion detected"
+		print "motion detected\n"
 		sendint.sendInt(ser, '2')
 
         return "motion detected"
