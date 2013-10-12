@@ -2,7 +2,7 @@
 case $1 in
 start)
 	sleep 2m
-        python /home/pi/PASA-2013-TIA-ELA/alameda/brains/server.py
+        python /home/pi/PASA-2013-TIA-ELA/alameda/brains/server.py 9090
 	;;
 esac   
 exit 0
