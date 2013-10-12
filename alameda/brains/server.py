@@ -24,7 +24,7 @@ MODE_MOTION_DETECTION = 2
 
 MODE_RANDOM = 3	
 
-mode = MODE_ALL_ON
+global mode = MODE_ALL_ON
 
 ser = serial.Serial('/dev/ttyACM0', 9600);
 #	time.sleep(2.0);
