@@ -66,6 +66,7 @@ class MotionEnded:
     def GET(self):
 
 	if mode == MODE_MOTION_DETECTION:
+		mode = MODE_ALL_ON
 		print "motion ended"
 		sendint.sendInt(ser, '1')
 
