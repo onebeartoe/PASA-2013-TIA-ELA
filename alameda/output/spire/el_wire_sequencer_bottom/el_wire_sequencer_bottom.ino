@@ -1,3 +1,5 @@
+// newest versio
+
 
 #define MODES_ALL_ON 1
 #define MODES_MOTION_DETECTED 2
@@ -153,3 +155,4 @@ void stepThrough()
   }  
   
 }
+
