@@ -1,5 +1,4 @@
 
-
 #define MODES_ALL_ON 1
 #define MODES_MOTION_DETECTED 2
 #define MODES_RANDOM 3
@@ -127,7 +126,7 @@ void randomly()
     }
     else
     {
-      state = HIGHT
+      state = HIGH;
     }
     
     digitalWrite(x, state);   // turn the EL channel on
