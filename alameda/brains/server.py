@@ -24,14 +24,11 @@ MODE_MOTION_DETECTION = 2
 
 MODE_RANDOM = 3	
 
-global mode = MODE_ALL_ON
+mode = MODE_ALL_ON
 
 ser = serial.Serial('/dev/ttyACM0', 9600);
-#	time.sleep(2.0);
-time.sleep(1.8);
+time.sleep(2.0);
 ser.open();
-
-
 
 class index:
     def GET(self):
@@ -39,7 +36,11 @@ class index:
 		
 class ModeAllOn:
     def GET(self):
+
+	global mode
+
 	mode = MODE_ALL_ON
+
 	sendint.sendInt(ser, '1')
 	print "mode changed to all on"
 
@@ -48,7 +49,10 @@ class ModeAllOn:
 class ModeMotionDetection:
     def GET(self):
 
+	global mode
+
 	mode = MODE_MOTION_DETECTION
+
 	sendint.sendInt(ser, '2')
 	print "mode changed to motion detection"
 
@@ -56,7 +60,11 @@ class ModeMotionDetection:
 
 class ModeRandom:
     def GET(self):
+
+	global mode
+
 	mode = MODE_RANDOM
+
 	sendint.sendInt(ser, '3')
 	print "mode changed to random"	
 
@@ -64,6 +72,8 @@ class ModeRandom:
 		
 class MotionEnded:
     def GET(self):
+	
+	global mode
 
 	if mode == MODE_MOTION_DETECTION:
 		mode = MODE_ALL_ON
@@ -74,6 +84,9 @@ class MotionEnded:
 
 class MotionDetected:
     def GET(self):
+
+	global mode
+
 	if mode == MODE_MOTION_DETECTION:
 		print "motion detected"
 		sendint.sendInt(ser, '2')
