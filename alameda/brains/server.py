@@ -69,7 +69,7 @@ class MotionEnded:
 		print "motion ended"
 		sendint.sendInt(ser, '1')
 
-        return render.modesForm(mode)		
+        return "motion ended"
 
 class MotionDetected:
     def GET(self):
@@ -77,7 +77,7 @@ class MotionDetected:
 		print "motion detected"
 		sendint.sendInt(ser, '2')
 
-        return render.modesForm(mode)
+        return "motion detected"
 		
 
 # start the web server
