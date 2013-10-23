@@ -9,6 +9,7 @@
 #define MODES_ALL_ON 1
 #define MODES_MOTION_DETECTED_A 2
 #define MODES_RANDOM 3
+#define MODES_LADDER 4
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(N_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
@@ -21,6 +22,51 @@ int spireSequencerPin = 9;  // connected digital pin 9
 int leftLightPin = 10;
 
 int rightLightPin = 11;
+
+int subladderMode = 0;
+
+void elLadder()
+{
+  switch(subladderMode)
+  {
+    case 0:
+    {
+      analogWrite(spireSequencerPin, 40);
+      break;
+    }
+
+    case 1:
+    {
+      analogWrite(spireSequencerPin, 41);
+      break;
+    }
+
+    case 2:
+    {
+      analogWrite(spireSequencerPin, 42);
+      break;
+    }
+
+    case 3:
+    {
+      analogWrite(spireSequencerPin, 43);
+      break;
+    }
+
+    case 4:
+    {
+      analogWrite(spireSequencerPin, 44);
+      break;
+    }
+    default:
+    {
+      subladderMode = -1;
+    }
+  }
+  subladderMode++;
+  
+//  delay(300);
+}
 
 void loop()
 { 
@@ -54,8 +100,15 @@ void loop()
     {
       analogWrite(spireSequencerPin, 300);
       randomly();
+      
       break;
     }
+    case MODES_LADDER:
+    {
+      elLadder();
+      
+      break;
+    }    
     default:
     {
       neoPixelsLadder(3, 500);      

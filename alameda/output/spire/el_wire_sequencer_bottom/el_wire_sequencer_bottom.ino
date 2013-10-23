@@ -18,6 +18,21 @@ int currentMode = MODES_ALL_ON;
 
 int brainsPin = A2;
 
+void bottomHorizontalOn()
+{
+  digitalWrite(FF, HIGH); 
+  digitalWrite(G, HIGH); 
+  digitalWrite(H, HIGH);
+}
+
+void bottomSpireOn()
+{
+  digitalWrite(B, HIGH); 
+  digitalWrite(C, HIGH); 
+  digitalWrite(D, HIGH);  
+  digitalWrite(E, HIGH);  
+}
+
 void loop()
 {   
   currentMode = analogRead(brainsPin);
@@ -63,6 +78,32 @@ void loop()
     {
       randomly();
     }
+    // ladder mode
+    case 40:
+    {
+      allOff();
+      break;
+    }
+    case 41:
+    {
+      bottomHorizontalOn();
+      
+      break;
+    }
+    case 42:
+    {
+
+    }
+    case 43:
+    {
+
+    }
+    case 44:
+    {
+      bottomHorizontalOn();
+      bottomSpireOn();
+      break;
+    }    
     default:
     {
       allOn();
@@ -70,9 +111,18 @@ void loop()
   }
 }
 
+void allOff()
+{
+  setAll(LOW);
+}
+
 void allOn()
 {
+  setAll(HIGH);
+}
 
+void allOnOriginal()
+{
      digitalWrite(A, HIGH); 
      digitalWrite(B, HIGH); 
      digitalWrite(C, HIGH); 
@@ -83,17 +133,17 @@ void allOn()
      digitalWrite(H, HIGH);    
 }
 
+
 void setAll(int mode)
 {
-
-     digitalWrite(A, HIGH); 
-     digitalWrite(B, HIGH); 
-     digitalWrite(C, HIGH); 
-     digitalWrite(D, HIGH); 
-     digitalWrite(E, HIGH); 
-     digitalWrite(FF, HIGH); 
-     digitalWrite(G, HIGH); 
-     digitalWrite(H, HIGH);    
+     digitalWrite(A, mode); 
+     digitalWrite(B, mode); 
+     digitalWrite(C, mode); 
+     digitalWrite(D, mode); 
+     digitalWrite(E, mode); 
+     digitalWrite(FF, mode); 
+     digitalWrite(G, mode); 
+     digitalWrite(H, mode);    
 }
 
 void setup() 

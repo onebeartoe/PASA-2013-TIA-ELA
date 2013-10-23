@@ -3,6 +3,7 @@
 #define MODES_ALL_ON 1
 #define MODES_MOTION_DETECTED 2
 #define MODES_RANDOM 3
+#define MODES_LADDER 4
 
 #define A  2
 #define B  3
@@ -17,6 +18,36 @@ int currentMode = MODES_ALL_ON;
 
 int brainsPin = A2;
 
+void allOff()
+{
+  setAll(LOW);
+}
+
+void allOn()
+{
+  setAll(HIGH);
+}
+
+void allOnOriginal()
+{
+
+     digitalWrite(A, HIGH);
+     digitalWrite(B, HIGH); 
+     digitalWrite(C, HIGH); 
+     digitalWrite(D, HIGH); 
+     digitalWrite(E, HIGH); 
+     digitalWrite(FF, HIGH); 
+     digitalWrite(G, HIGH); 
+     digitalWrite(H, HIGH);    
+}
+
+void bottomElOn()
+{
+  digitalWrite(A, HIGH);
+  digitalWrite(D, HIGH);
+
+}
+      
 void loop()
 {   
   currentMode = analogRead(brainsPin);
@@ -39,12 +70,19 @@ void loop()
     case 300:
     {
       currentMode = MODES_RANDOM;
+      break;
+    }
+    case 40:
+    {
+      currentMode = MODES_LADDER;
     }
     default:
     {
         Serial.println(currentMode);
     }
   }
+  
+//  currentMode = 40;
   
   switch(currentMode)
   {
@@ -62,6 +100,31 @@ void loop()
     {
       randomly();
     }
+    // ladder mode
+    case 40:
+    {
+
+    }
+    case 41:
+    {
+
+    }
+    case 42:
+    {
+      allOff();
+      break;
+    }
+    case 43:
+    {
+      bottomElOn();
+      break;
+    }
+    case 44:
+    {
+      bottomElOn();
+      topElOn();
+      break;
+    }       
     default:
     {
       allOn();
@@ -69,30 +132,16 @@ void loop()
   }
 }
 
-void allOn()
-{
-
-     digitalWrite(A, HIGH); 
-     digitalWrite(B, HIGH); 
-     digitalWrite(C, HIGH); 
-     digitalWrite(D, HIGH); 
-     digitalWrite(E, HIGH); 
-     digitalWrite(FF, HIGH); 
-     digitalWrite(G, HIGH); 
-     digitalWrite(H, HIGH);    
-}
-
 void setAll(int mode)
 {
-
-     digitalWrite(A, HIGH); 
-     digitalWrite(B, HIGH); 
-     digitalWrite(C, HIGH); 
-     digitalWrite(D, HIGH); 
-     digitalWrite(E, HIGH); 
-     digitalWrite(FF, HIGH); 
-     digitalWrite(G, HIGH); 
-     digitalWrite(H, HIGH);    
+     digitalWrite(A, mode); 
+     digitalWrite(B, mode); 
+     digitalWrite(C, mode); 
+     digitalWrite(D, mode); 
+     digitalWrite(E, mode); 
+     digitalWrite(FF, mode); 
+     digitalWrite(G, mode); 
+     digitalWrite(H, mode);    
 }
 
 void setup() 
@@ -127,7 +176,7 @@ void randomly()
     }
     else
     {
-      state = HIGHT
+      state = HIGH;
     }
     
     digitalWrite(x, state);   // turn the EL channel on
@@ -155,9 +204,9 @@ void stepThrough()
   
 }
 
-
-
-
-
-
+void topElOn()
+{
+  digitalWrite(B, HIGH);
+  digitalWrite(C, HIGH);
+}
 
