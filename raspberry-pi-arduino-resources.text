@@ -27,7 +27,11 @@ Raspberry Pi
 
 	curl was used for motion detection communication between the mmal-motion daemon and the web.py instances
 
+	static IP
 
+		The installation has a WiFi component, so a static IP was needed for the PI in case of reboot.
+
+		https://www.modmypi.com/blog/tutorial-how-to-give-your-raspberry-pi-a-static-ip-address
 
 Arduino EL Wire Sequencer
 
