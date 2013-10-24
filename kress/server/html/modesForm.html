@@ -1,0 +1,54 @@
+$def with (mode)
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  
+    <head>
+        <title>PASA 2013 - TIA ELA - Alameda</title>
+    </head>
+
+    <body>
+
+	<br/>
+	<br/>
+	<br/>
+	<center>
+		<h3>Current mode: $mode</h3>
+	</center>
+	<br/>
+	<br/>
+	<br/>
+
+
+	<form method="GET" action="/mode/all-on">	
+		<center>
+			<input type="submit" value="All On" 
+				style="width: 70%; height: 2em; font-size: 3em;">
+		</center>
+	</form>
+
+	<br/>
+	<br/>
+	<br/>
+	
+	<form method="GET" action="/mode/random">	
+		<center>
+			<input type="submit" value="Random" style="width: 70%; height: 2em; font-size: 3em;">
+		</center>
+	</form>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<form method="GET" action="/mode/ladder">
+		<center>
+			<input type="submit" value="Ladder" style="width: 70%; height: 2em; font-size: 3em;">
+		</center>
+	</form>
+
+    </body>
+
+</html>
+
