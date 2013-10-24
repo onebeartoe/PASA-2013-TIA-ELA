@@ -38,3 +38,11 @@ Arduino EL Wire Sequencer
 
 	This was a good guide on how to power the  board and EL wire.
 	http://bildr.org/2011/06/el-sequencer/
+
+
+---------------------------------------------------------------------
+
+
+Java
+
+	sudo apt-get update && sudo apt-get install oracle-java7-jdk
