@@ -11,7 +11,7 @@ def sendInt(ser, i):
 			ser = serial.Serial('/dev/ttyACM0', 9600);
 			time.sleep(2.0);
 			ser.open();			
-		except OSError, SerialException:
+		except (OSError, serial.serialutil.SerialException):
 			print "could not open the serial port"
 	
 	if ser is not None:
