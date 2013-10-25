@@ -7,7 +7,7 @@ import time
 
 import sendint;
 
-render = web.template.render('/cygdrive/c/home/owner/github/PASA-2013-TIA-ELA-master/kress/server/html/')
+render = web.template.render('/home/pi/PASA-2013-TIA-ELA/kress/server/html/')
 
 urls = (
 	'/', 'index',
