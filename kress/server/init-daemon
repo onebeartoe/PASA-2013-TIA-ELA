@@ -1,7 +1,6 @@
 
 case $1 in
 start)
-	sleep 2m
         python /home/pi/PASA-2013-TIA-ELA/kress/server/server.py 9090
 	;;
 esac   
