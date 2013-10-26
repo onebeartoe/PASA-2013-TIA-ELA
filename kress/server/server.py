@@ -5,7 +5,11 @@ import serial;
 
 import time
 
-import sendint;
+#import sendint;
+
+import serial;
+import serial.serialutil;
+import time;
 
 render = web.template.render('/home/pi/PASA-2013-TIA-ELA/kress/server/html/')
 
@@ -40,7 +44,7 @@ class ModeAllOn:
 
 	mode = MODE_ALL_ON
 
-	sendint.sendInt(ser, '1')
+	sendInt(ser, '1')
 	print "mode changed to all on"
 
         return render.modesForm(mode)
@@ -53,7 +57,7 @@ class ModeRandom:
 
 	mode = MODE_RANDOM
 
-	sendint.sendInt(ser, '2')
+	sendInt(ser, '2')
 	print "mode changed to random"	
 
         return render.modesForm(mode)
@@ -66,10 +70,32 @@ class ModeLadder:
 
 	mode = MODE_LADDER
 
-	sendint.sendInt(ser, '3')
+	sendInt(ser, '3')
 	print "mode changed to ladder\n"	
 
         return render.modesForm(mode)
+
+
+
+def sendInt(ser, i):
+
+	global ser
+	
+	if ser is None:
+	
+		print "serial is null, trying to initialize"
+	
+		try:
+			ser = serial.Serial('/dev/ttyACM0', 9600);
+			time.sleep(2.0);
+			ser.open();			
+		except (OSError, serial.serialutil.SerialException):
+			print "could not open the serial port"
+	
+	if ser is not None:
+		print "writing int to serial"
+		ser.write(i);
+
 		
 # start the web server
 if __name__ == "__main__":
