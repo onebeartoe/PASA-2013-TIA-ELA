@@ -44,7 +44,7 @@ class ModeAllOn:
 
 	mode = MODE_ALL_ON
 
-	sendInt(ser, '1')
+	sendInt('1')
 	print "mode changed to all on"
 
         return render.modesForm(mode)
@@ -57,7 +57,7 @@ class ModeRandom:
 
 	mode = MODE_RANDOM
 
-	sendInt(ser, '2')
+	sendInt('2')
 	print "mode changed to random"	
 
         return render.modesForm(mode)
@@ -70,14 +70,14 @@ class ModeLadder:
 
 	mode = MODE_LADDER
 
-	sendInt(ser, '3')
+	sendInt('3')
 	print "mode changed to ladder\n"	
 
         return render.modesForm(mode)
 
 
 
-def sendInt(ser, i):
+def sendInt(i):
 
 	global ser
 	
