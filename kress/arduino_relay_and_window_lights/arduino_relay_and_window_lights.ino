@@ -1,106 +1,76 @@
 
-#include <Adafruit_NeoPixel.h>
-
-#define N_PIXELS  125  // Number of pixels in strand
-
-#define LED_PIN    6  // NeoPixel LED strand is connected to this pin
-
-// light modes
+// window light modes
 #define MODES_ALL_ON 1
-#define MODES_RANDOM 2
-#define MODES_LADDER 4
-
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(N_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
+#define MODES_BLINK 2
+#define MODES_KNIGHT_RIDER_2009 3
 
 //int currentMode = 172543;
-int currentMode = MODES_ALL_ON;
+//int currentMode = MODES_ALL_ON;
+int currentMode = MODES_BLINK;
+//int currentMode = MODES_ALL_ON;
 
-int motionDetectedAHeight = 0;
+// pins used by the shift registers
+int dataPin = 2;              // The Serial Data Pin to the Shift Register
+int latchPin = 3;             // The Latch Pin to the Shift Register
+int clockPin = 4;             // The Clock Pin to the Shift Register
 
-int spireSequencerPin = 9;  // connected digital pin 9
+int spireSequencerPin = 10;  // connected digital pin 10
 
-// remove after testing
-const int ledPin =  13;      // the number of the LED pin
-const int ledPin2 = 12;
-int ledState = LOW;             // ledState used to set the LED
-long previousMillis = 0;        // will store last time LED was updated
-// the follow variables is a long because the time, measured in miliseconds,
-// will quickly become a bigger number than can be stored in an int.
-long interval = 1000;           // interval at which to blink (milliseconds)
-// end of test varialbes
+byte leds_1_8;
+
+// counter for ladder mode
+int ladderHeight;
+
+//int ladderByte1 [];
+
+// knight rider
+int seq[14] = {1,2,4,8,16,32,64,128,64,32,16,8,4,2};
+int seq2[14] = {128,64,32,16,8,4,2,1,2,4,8,16,32,64};
+int value = 0;
+int value2 = 0;
 
 
-int leftLightPin = 10;
+void allOff()
+{
+  setAllWindows(LOW);  
+  updateShiftRegister();  
+}
 
-int rightLightPin = 11;
-
-int subladderMode = 0;
+void allOn()
+{
+  setAllWindows(HIGH);  
+  updateShiftRegister();  
+}
 
 void blink()
 {
-  // check to see if it's time to blink the LED; that is, if the 
-  // difference between the current time and last time you blinked 
-  // the LED is bigger than the interval at which you want to 
-  // blink the LED.
-  unsigned long currentMillis = millis();
- 
-  if(currentMillis - previousMillis > interval) {
-    // save the last time you blinked the LED 
-    previousMillis = currentMillis;   
-
-    // if the LED is off turn it on and vice-versa:
-    if (ledState == LOW)
-      ledState = HIGH;
-    else
-      ledState = LOW;
-
-    // set the LED with the ledState of the variable:
-    digitalWrite(ledPin, ledState);
-    digitalWrite(ledPin2, ledState);
-  }  
+   allOn();
+   delay(300);
+   
+   allOff();
+   delay(300);
 }
 
-void elLadder()
+void defaultMode()
 {
-  switch(subladderMode)
-  {
-    case 0:
-    {
-      analogWrite(spireSequencerPin, 40);
-      break;
-    }
-
-    case 1:
-    {
-      analogWrite(spireSequencerPin, 41);
-      break;
-    }
-
-    case 2:
-    {
-      analogWrite(spireSequencerPin, 42);
-      break;
-    }
-
-    case 3:
-    {
-      analogWrite(spireSequencerPin, 43);
-      break;
-    }
-
-    case 4:
-    {
-      analogWrite(spireSequencerPin, 44);
-      break;
-    }
-    default:
-    {
-      subladderMode = -1;
-    }
-  }
-  subladderMode++;
+  boolean bits []= {true,false,true,false,true,false,true,false};
+  byte b = setByte(bits);
+  byte bytes [] = {0,0,b,0};
   
-//  delay(300);
+  updateShiftRegister(bytes);
+}
+
+void knightRider()
+{
+  for (int n=0; n < 14; n++)
+  {
+    value = seq[n];             //Forward array
+    value2 = seq2[n];          //Reverse array
+    
+    writeKnightRiderOutput();
+    
+    delay(75);
+  }  
 }
 
 void loop()
@@ -108,65 +78,130 @@ void loop()
   if (Serial.available())
   {
     currentMode = Serial.read() - '0';
+    Serial.print(currentMode);
   }
+  
+  int pinData;
   
   switch(currentMode)
   {
     case MODES_ALL_ON:
     {
-      analogWrite(spireSequencerPin, 0);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+      pinData = 10;
       
-      digitalWrite(leftLightPin, HIGH);
-      digitalWrite(rightLightPin, HIGH); 
-
-digitalWrite(ledPin, HIGH);
-digitalWrite(ledPin2, HIGH);
+      allOn();
       
       break;
     }
-    case MODES_RANDOM:
+    case MODES_BLINK:
     {
-      analogWrite(spireSequencerPin, 20);
-blink();
-//      randomly();
+      pinData = 20;
+      
+      blink();
       
       break;
     }
-    case MODES_LADDER:
+    case MODES_KNIGHT_RIDER_2009:
     {
-      elLadder();
+      pinData = 30;
+      knightRider();
       
       break;
-    }    
+    }
     default:
     {
-      blink();
+      pinData = 100;
+      
+      defaultMode();
     }
   }
+  
+  // relay the mode to the other microcontrollers
+  analogWrite(spireSequencerPin, pinData);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+  
+  Serial.print(currentMode);
 }
 
-boolean yellowLights = true;
-
-void randomly()
+void setAllWindows(int state)
 {
+  for (int i = 0; i < 8; i++)
+  {
+    if(state == HIGH)
+    {
+      bitSet(leds_1_8, i);      
+    }
+    else
+    {
+      bitClear(leds_1_8, i);
+    }
+  }  
+}
 
+byte setByte(boolean bits[])
+{
+  byte b = 0;
+  
+  for(int i=0; i<8; i++)
+  {
+    if(bits[i])
+    {
+      bitSet(b, i);
+    }
+    else
+    {
+      bitClear(b,i);
+    }
+  }
+  
+  return b;
 }
 
 void setup() 
 {
-  // dummy pin for on-board LED
-  pinMode(ledPin, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  
-  pinMode (leftLightPin,OUTPUT);
-  
-  pinMode (rightLightPin,OUTPUT);
+  // Configure Digital Pins used by the 4 shift registers
+  pinMode(dataPin, OUTPUT);
+  pinMode(latchPin, OUTPUT);
+  pinMode(clockPin, OUTPUT); 
     
-  pinMode(spireSequencerPin, OUTPUT);   // sets the pin as output
+//  pinMode(spireSequencerPin, OUTPUT);   // sets the pin as output
   
   // initialize serial communication:
   Serial.begin(9600);
-
-  strip.begin();
 }
 
+void updateShiftRegister()
+{
+  digitalWrite(latchPin, LOW);
+  
+  shiftOut(dataPin, clockPin, LSBFIRST, leds_1_8);
+  shiftOut(dataPin, clockPin, LSBFIRST, leds_1_8);
+  shiftOut(dataPin, clockPin, LSBFIRST, leds_1_8);
+  shiftOut(dataPin, clockPin, LSBFIRST, leds_1_8);
+  digitalWrite(latchPin, HIGH);
+}
+
+void updateShiftRegister(byte bytes [])
+{
+  digitalWrite(latchPin, LOW);
+  
+  for(int i=0; i<4; i++)
+  {
+    shiftOut(dataPin, clockPin, LSBFIRST, bytes[i]);
+  }
+  
+  digitalWrite(latchPin, HIGH);
+}
+
+void writeKnightRiderOutput()
+{
+    digitalWrite(latchPin, LOW);                       // Pull latch LOW to send data
+    
+    shiftOut(dataPin, clockPin, MSBFIRST, value);      // Send the data byte 1
+    shiftOut(dataPin, clockPin, MSBFIRST, value);      // Send the data byte 1
+    shiftOut(dataPin, clockPin, MSBFIRST, value);      // Send the data byte 1
+    
+    shiftOut(dataPin, clockPin, MSBFIRST, value);      // Send the data byte 1
+//    shiftOut(dataPin, clockPin, MSBFIRST, value2);     // Send the data byte 2
+
+    digitalWrite(latchPin, HIGH);                      // Pull latch HIGH to stop sending data
+}
