@@ -67,6 +67,14 @@ void bottomElOn()
 
 }
 
+void looppppp()
+{
+//  setAll(LOW);
+  delay(500);
+  setAll(HIGH);
+  delay(500);
+}
+
 void loop()
 {   
   currentMode = analogRead(MODE_INPUT_PIN);
@@ -76,7 +84,7 @@ void loop()
     case 0:
     {
          currentMode = MODES_ALL_ON;
-         Serial.println(currentMode);
+//         Serial.println(currentMode);
          break;
     } 
     case 20:
@@ -94,7 +102,8 @@ void loop()
     }
   }
   
-//  currentMode = 40;
+//  currentMode = MODES_RANDOM;
+  currentMode = MODES_ALL_ON;
   
   switch(currentMode)
   {
@@ -105,6 +114,7 @@ void loop()
     }
     case MODES_RANDOM:
     {
+Serial.println("randomly");      
       randomly();
     }
     // ladder mode
@@ -171,6 +181,9 @@ void setAll(int mode)
 void setup() 
 {
   pinMode(MODE_INPUT_PIN, INPUT);
+  digitalWrite(MODE_INPUT_PIN, HIGH);
+//  digitalWrite(MODE_INPUT_PIN, LOW);
+  
   randomSeed( analogRead(A5) );
 
   pinMode(A, OUTPUT);
