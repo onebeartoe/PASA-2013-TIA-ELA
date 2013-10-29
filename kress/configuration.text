@@ -1,11 +1,12 @@
 
 WiFi Router:
 
-	name:
-	passphrase:
+	name: pasa-2013-tia-ela-kress
 
+	password: kress210
 -----------------------------------------------
 
 Raspberry:
 
-	IP address:
+	IP address: 192.168.0.3
+
