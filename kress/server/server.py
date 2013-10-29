@@ -60,7 +60,7 @@ class ModeBlink:
         return render.modesForm(mode)
 
 
-class ModeLadder:
+class ModeChaser:
     def GET(self):
 
 	global mode
@@ -71,7 +71,6 @@ class ModeLadder:
 	print "mode changed to CHASER\n"	
 
         return render.modesForm(mode)
-
 
 
 def sendInt(i):
