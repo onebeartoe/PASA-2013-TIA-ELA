@@ -16,22 +16,19 @@ render = web.template.render('/home/pi/PASA-2013-TIA-ELA/kress/server/html/')
 urls = (
 	'/', 'index',
 	'/mode/all-on', 'ModeAllOn',
-	'/mode/random', 'ModeRandom',
-	'/mode/ladder', 'ModeLadder',
+	'/mode/blink', 'ModeBlink',
+	'/mode/chaser', 'ModeChaser',
 )
 
 MODE_ALL_ON = 1
 
-MODE_RANDOM = 2	
+MODE_BLINK = 2	
 
-MODE_LADDER = 3	
+MODE_CHASER = 3	
 
 mode = MODE_ALL_ON
 
 ser = None
-#ser = serial.Serial('/dev/ttyACM0', 9600);
-#time.sleep(2.0);
-#ser.open();
 
 class index:
     def GET(self):
@@ -50,15 +47,15 @@ class ModeAllOn:
         return render.modesForm(mode)
 
 
-class ModeRandom:
+class ModeBlink:
     def GET(self):
 
 	global mode
 
-	mode = MODE_RANDOM
+	mode = MODE_BLINK
 
 	sendInt('2')
-	print "mode changed to random"	
+	print "mode changed to BLINK"	
 
         return render.modesForm(mode)
 
@@ -68,10 +65,10 @@ class ModeLadder:
 
 	global mode
 
-	mode = MODE_LADDER
+	mode = MODE_CHASER
 
 	sendInt('3')
-	print "mode changed to ladder\n"	
+	print "mode changed to CHASER\n"	
 
         return render.modesForm(mode)
 

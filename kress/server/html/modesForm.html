@@ -10,11 +10,14 @@ $def with (mode)
 
     <body>
 
+
 	<br/>
 	<br/>
 	<br/>
 	<center>
-		<h3>Current mode: $mode</h3>
+		<h1 	style="font-size: 3em;">Light Modes:</h1>
+
+
 	</center>
 	<br/>
 	<br/>
@@ -32,9 +35,9 @@ $def with (mode)
 	<br/>
 	<br/>
 	
-	<form method="GET" action="/mode/random">	
+	<form method="GET" action="/mode/blink">	
 		<center>
-			<input type="submit" value="Random" style="width: 70%; height: 2em; font-size: 3em;">
+			<input type="submit" value="Blink" style="width: 70%; height: 2em; font-size: 3em;">
 		</center>
 	</form>
 
@@ -42,11 +45,23 @@ $def with (mode)
 	<br/>
 	<br/>
 
-	<form method="GET" action="/mode/ladder">
+	<form method="GET" action="/mode/chaser">
 		<center>
-			<input type="submit" value="Ladder" style="width: 70%; height: 2em; font-size: 3em;">
+			<input type="submit" value="Chaser" style="width: 70%; height: 2em; font-size: 3em;">
 		</center>
 	</form>
+
+	<br/>
+	<br/>
+	<br/>
+	<center>
+		<h3>Current mode: $mode</h3>
+	</center>
+	<br/>
+	<br/>
+	<br/>
+
+
 
     </body>
 
