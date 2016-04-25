@@ -1,0 +1,24 @@
+
+Microphones:
+
+	MAX9814 (auto-gain)
+	
+		https://www.adafruit.com/product/1713
+	
+		https://learn.adafruit.com/adafruit-agc-electret-microphone-amplifier-max9814?view=all
+
+		
+	MAX4466 (manual gain)
+	
+		https://www.adafruit.com/product/1063
+	
+		https://learn.adafruit.com/led-ampli-tie/overview
+		
+		
+Microphone Project Guides:
+
+	https://learn.adafruit.com/adafruit-microphone-amplifier-breakout
+	
+	https://learn.adafruit.com/adafruit-microphone-amplifier-breakout/measuring-sound-levels
+
+	https://learn.adafruit.com/piccolo
