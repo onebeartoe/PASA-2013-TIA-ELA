@@ -1,3 +1,5 @@
+
+
 /*
 LED VU meter for Arduino and Adafruit NeoPixel LEDs.
 
@@ -44,9 +46,10 @@ int
   minLvlAvg = 0,      // For dynamic adjustment of graph low & high
   maxLvlAvg = 512;
 Adafruit_NeoPixel
-  strip = Adafruit_NeoPixel(N_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
+  lowerStrip = Adafruit_NeoPixel(N_PIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
-void setup() {
+void setup() 
+{
 
   // This is only needed on 5V Arduinos (Uno, Leonardo, etc.).
   // Connect 3.3V to mic AND TO AREF ON ARDUINO and enable this
@@ -55,7 +58,7 @@ void setup() {
   analogReference(EXTERNAL);
 
   memset(vol, 0, sizeof(vol));
-  strip.begin();
+  lowerStrip.begin();
 }
 
 void loop() {
@@ -79,28 +82,33 @@ void loop() {
 
 
   // Color pixels based on rainbow gradient
-  for(i=0; i<N_PIXELS; i++) {
-    if(i >= height)               strip.setPixelColor(i,   0,   0, 0);
-    else strip.setPixelColor(i,Wheel(map(i,0,strip.numPixels()-1,30,150)));
-    
+  for(i=0; i<N_PIXELS; i++) 
+  {
+    if(i >= height)               
+    {
+      lowerStrip.setPixelColor(i,   0,   0, 0);
+    }
+    else
+    {
+      byte m = map(i,0,lowerStrip.numPixels()-1,30,150);
+      uint32_t w = Wheel(m);
+      lowerStrip.setPixelColor(i, w);
+    }
   }
 
-
-
   // Draw peak dot  
-  if(peak > 0 && peak <= N_PIXELS-1) strip.setPixelColor(peak,Wheel(map(peak,0,strip.numPixels()-1,30,150)));
+  if(peak > 0 && peak <= N_PIXELS-1) lowerStrip.setPixelColor(peak,Wheel(map(peak,0,lowerStrip.numPixels()-1,30,150)));
   
-   strip.show(); // Update strip
+  lowerStrip.show(); // Update strip
 
-// Every few frames, make the peak pixel drop by 1:
-
-    if(++dotCount >= PEAK_FALL) { //fall rate 
+  // Every few frames, make the peak pixel drop by 1:
+  if(++dotCount >= PEAK_FALL) 
+  { 
+    //fall rate 
       
       if(peak > 0) peak--;
       dotCount = 0;
-    }
-
-
+  }
 
   vol[volCount] = n;                      // Save sample for dynamic leveling
   if(++volCount >= SAMPLES) volCount = 0; // Advance/rollover sample counter
@@ -125,14 +133,16 @@ void loop() {
 
 // Input a value 0 to 255 to get a color value.
 // The colors are a transition r - g - b - back to r.
-uint32_t Wheel(byte WheelPos) {
+uint32_t Wheel(byte WheelPos) 
+{
   if(WheelPos < 85) {
-   return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+   return lowerStrip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
   } else if(WheelPos < 170) {
    WheelPos -= 85;
-   return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+   return lowerStrip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
   } else {
    WheelPos -= 170;
-   return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+   return lowerStrip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
   }
 }
+
