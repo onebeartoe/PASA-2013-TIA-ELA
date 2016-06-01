@@ -27,7 +27,7 @@ This paragraph must be included in any redistribution.
 
 #include <Adafruit_NeoPixel.h>
 
-#define N_PIXELS  32  // Number of pixels in strand
+#define N_PIXELS  35  // Number of pixels in strand
 #define MIC_PIN   A5  // Microphone is attached to this analog pin
 #define LED_PIN    6  // NeoPixel LED strand is connected to this pin
 #define DC_OFFSET  0  // DC offset in mic signal - if unusure, leave 0
